@@ -1,0 +1,47 @@
+Weekly Report #1  (Coding Phase)
+
+According to project plan:
+
+25th May - 5th June:
+
+* Finalize the overall architecture of the project.
+* Finalize the database-design\ other storage format which will be used for dynamically 
+  storing\updating the data for time-dependent edge weights.
+* Finalize the class-diagram which will be used for the implementation.
+* Finalize the prototypes for the SQL-queries and the SQL-shared library functions that must be 
+  implemented.
+* Decide the test cases and data that will be needed for rigorous testing of the modules.
+* Start coding small trivial modules/functions that will be needed for the project.
+
+6th June - 15th June:
+
+* Implement the basic time-dependent dijkstra algorithm using Boost Graph Library and Boost Priority 
+  Queues Library assuming the time_dependent_cost
+* function as black box.
+* Test the basic function with dummy data.
+
+
+Current Progress:
+
+* We have mostly finalized the database design, input format and the class design.
+The design details can be seen here: https://github.com/pgRouting/pgrouting/wiki/TDSP-Details
+* According to new plan, we are not using Boost Priority Queues for heap operations during dijkstra search.
+
+Instead, I have implemented a binary heap that will provide the functionality.
+I have also coded the data structures that would be required for the core - time dependent dijkstra implementation.
+The initial working draft of algorithm is also ready. 
+Please find the source at: https://github.com/pgRouting/pgrouting/blob/gsoc-tdsp/extra/tdsp/tdsp_core.cpp
+It needs to be tested for different test cases.
+Also, there could be ways which could optimise the implementation (space complexity / time complexity)
+Any such ideas are welcome.
+
+Blocking Issues:
+
+Acquiring real world time-dependent data is a big hurdle, since as far as we know till date, it is not freely available.
+We are looking at other options so that algorithm can be tested on actual data.
+
+Next week goals:
+Continue to work on the core algorithm, and test it for different dummy test cases which for now will need to be generated.
+Find out bugs and work them out.
+
+
