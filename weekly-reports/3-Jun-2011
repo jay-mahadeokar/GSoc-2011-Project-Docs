@@ -1,0 +1,45 @@
+Weekly Report #2:
+Date - 3rd June 2011
+
+According to project plan:
+-----------------------------------------------------------------------------------------------------------------------------------------
+Finish the design of project, and the core-time dependent shortest path implementation and test the code with dummy data till 15 June.
+
+
+Current Progress:
+------------------------------------------------------------------------------------------------------------------------------------------
+I had implemented initial draft of the core time-dependent algorithm in 1st week. I fixed a few bugs that were there in the initial draft.
+
+I have also organised the code into different header files - binary_heap.h, weight_map.h, edge_wrapper.h.
+
+Added a boost - dijkstra test function which calls boost::dijkstra_shortest_paths() so as to verify the result.
+Also, wrote a graph generator which can generate random graphs according to the parameters specified:
+- number of vertices
+- maximum outdegree of a vertex (I keep this 6 or 8 , since 6 is degree limit for planar graphs)
+- Number of time windows and the range of time windows.
+
+So, to see if the result returned by tdsp-dijkstra function is correct,  I generated random graphs with time window 1, which starts from 0, meaning that the same travel time will be there for any given start time. This is basically static dijkstra.
+
+I compared the results returned by tdsp-dijkstra and boost-dijkstra and I am getting same output. Tried for graphs with 20,100,500,1000 nodes with max outdegree 8. (generating graphs with nodes more than that was taking too much time and my CPU was getting overworked!)
+
+Only difference in boost-output and tdsp-output comes when there are more than one shortest paths of same length. The there might be difference of predecessors. I guess that is because of different implementations of priority queue (binary_heap in my case).
+
+I have updated the code in gsoc-tdsp branch: https://github.com/pgRouting/pgrouting/tree/gsoc-tdsp. Please review, any comments are welcome.
+
+I believe there are many parts which can be optimised, like binary_heap reduce_key() function, as well as weight_map.get_travel_time() function.
+
+Also, the actual time-dependent functionality i.e multiple time windows needs to be tested for real world large graphs. To do this, we are planning to generate time dependent data ourselves corresponding to the static data available in pgRouting-workshop database, since such data is not freely available as far as our knowledge.
+
+Some of the options for this data generation (according to discussions in pgrouting-dev list)are:
+
+- Generate random data (That would take most extreme test cases into account)
+- If we think about "rush hour" around a major city, the highways (based on road class) flowing into the city in the morning would get reduced average speeds you could apply curve like average speed*percent based on 6am (90%), 7am(75%), 8am(45%), 9am(50%), 10am(85%) and do something similar in the evening rush. It might be too hard to figure on direction of flow in/out bound so apply the curve to all traffic. The assumption is that the highways are congested which will force traffic onto side streets. We can also reduce the lower class speeds by say a constant 80% during rush hour.
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Next week goals:
+
+* Generate the time-dependent data corresponding to the data in pgRouting-workshop as planned above.
+* Start working on writing postgreSQL C function that will call the core-time dependent function.
+* Keep testing the core function, find bugs if any, and fix them.
