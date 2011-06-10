@@ -1,0 +1,30 @@
+Weekly Report #3:
+Date - 10th June 2011
+
+According to project plan:
+-----------------------------------------------------------------------------------------------------------------------------------------
+Finish the design of project, and the core-time dependent shortest path implementation and test the code with dummy data till 15 June.
+
+
+Current Progress:
+------------------------------------------------------------------------------------------------------------------------------------------
+I had coded and tested the core-tdsp algorithm such that it returns the distance-map and predecessor-map for given source.
+This week I wrote a wrapper function which does the following task:
+- Takes edges, weight_map_elements, source and target vertices as parameters.
+- Generates boost adjecency graph, weight_map and passes it to the tdsp_core function.
+- tdsp_core returns the distance_map and predecessor_map corresponding to source.
+- The wrapper function now generates the path from source to destination, and returns path_elements as result.
+
+
+I tested this for different source-destination pairs and it seems to be working for now. Bugs need to be discovered with more
+rigorous testing and fixed in coming weeks.
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+Next week goals:
+Finalize the prototype for the postgreSQL query for tdsp. 
+How to formulate the query for retrieving data from the timeDependentCost table (used to generate the weight_map) is still under debate
+on pgRouing mailing list. We are considering various options like letting the user provide the query, or form the query ourselves
+and the pros and cons of both approaches.
+
+We hope to find a viable solution for the same asap and start working towards implementing the same.
